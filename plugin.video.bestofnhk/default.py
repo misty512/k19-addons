@@ -30,7 +30,7 @@ host3 = 'https://ak.c.ooyala.com/'
 host4 = 'https://player.ooyala.com/player/all/'
 host5 = 'https://www.nhk.or.jp/rj/podcast/rss/'
 host6 = 'https://www.jibtv.com'
-host7 = ''
+host7 = 'https://nwapi.nhk.jp/nhkworld/vodpglist/v7b/'
 host8 = 'https://nwapi.nhk.jp/nhkworld/vodesdlist/v7b/'
 host9 = 'https://www3.nhk.or.jp/nhkworld/assets/images/vod/icon/png320/'
 host10 = 'https://nwapi.nhk.jp/nhkworld/pg/v6b/'
@@ -418,6 +418,7 @@ def IDX_OTHER_LIVE_STRM():
 
 def IDX_VOD_CATS(url):
     addDir('On Demand Full Listing', host8+'all/all/en/all/all.json', 'vod', nhk_icon)
+    addDir('Programs', host7+'en/voice/list.json', 'vod_pg', nhk_icon)
     addDir('Latest Episodes', host8+'all/all/en/all/12.json', 'vod', nhk_icon)
     addDir('Most Watched', host8+'mostwatch/all/en/all/12.json', 'vod', nhk_icon)
     addDir('Playlists', host14+'en/playlist/all.json', 'p_lists', nhk_icon)
@@ -494,6 +495,24 @@ def VOD_RESOLVE(name,url,plot,iconimage):
         except:
             pass
         #xbmcplugin.setContent(pluginhandle, 'episodes')
+
+
+#programs
+def IDX_PROGS(url):
+    xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE_IGNORE_THE
+    req = urllib.request.urlopen(url)
+    progs_json = json.load(req)
+    progs = progs_json['vod_programs']['programs']
+    for key, value in dict.items(progs):
+        ttl_ep = progs_json['vod_programs']['programs'][key]['total_episode']
+        if ttl_ep > 0:
+            series_ = progs_json['vod_programs']['programs'][key]['title']
+            thumbnl_ = progs_json['vod_programs']['programs'][key]['image_l']
+            ep_list = host8+'program/'+key+'/en/all/all.json'
+            series = translate(series_, trans_dict)
+            thumbnl = host2[:-1]+thumbnl_
+            addDir2(series+' - '+str(ttl_ep)+' episodes', ep_list, 'vod', '', thumbnl) #prog_list_id, 'vod', '', thumbnl)
+            xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE_IGNORE_THE)
 
 
 #playlists
@@ -732,13 +751,13 @@ def IDX_YOUTUBE1():
                
     addDirYT(title="Youtube Search for 'NHK World'",
         url='plugin://plugin.video.youtube/search/?q=NHK World')
-
-    #addDirYT(title="NHK Videos - Select Playlists in next menu",
-    #           url="plugin://plugin.video.youtube/channel/UCMsBttS0NCgp7HXuAeN22QQ/")
                
     addDirYT(title="NHK Online",
         url='plugin://plugin.video.youtube/user/NHKonline/')
-               
+
+    addDirYT(title="JIBTV",
+        url='plugin://plugin.video.youtube/channel/UCNDBKoxuRnLxEeNWiKmuN2A/')
+
     addDirYT(title="UNESCO/NHK",
         url="plugin://plugin.video.youtube/playlist/PLWuYED1WVJIPKU_tUlzLTfkbNnAtkDOhS/")
                
@@ -902,6 +921,10 @@ elif mode=='vod_cats':
 elif mode=='vod_resolve':
     print(""+url)
     VOD_RESOLVE(name,url,plot,iconimage)
+
+elif mode=='vod_pg':
+    print(""+url)
+    IDX_PROGS(url)
 
 elif mode=='jibtv':
     print(""+url)
