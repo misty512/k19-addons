@@ -1,0 +1,41 @@
+Ver. 3.0.06
+
+Best of NHK
+
+Fix: NHK On Demand
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Ver. 3.0.05
+
+Best of NHK
+
+Add: Programs menu in NHK On Demand
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Ver. 3.0.04
+
+Best of NHK
+
+Fix: Live streams, Video On Demand, World News and Radio News
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Ver. 3.0.03
+
+Best of NHK
+
+Fix: Live streams
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Ver. 3.0.02
+
+Best of NHK
+
+Fix: Deprecation issues
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Ver. 3.0.01
+
+Best of NHK
+
+Kodi 19.x is the minimum version for this add-on.
+Best of NHK add-on is now compatible with Kodi 19
