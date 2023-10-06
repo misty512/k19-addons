@@ -1,4 +1,4 @@
-# Best of NHK - by misty 2013-2022.
+# Best of NHK - by misty 2013-2023.
 # import python libraries
 import urllib.request, urllib.error, urllib.parse
 import re
@@ -470,36 +470,18 @@ def IDX_VOD(url,mode):
 
 def VOD_RESOLVE(name,url,plot,iconimage):
     vid_id = str(url)
-    req = urllib.request.Request('https://movie-s.nhk.or.jp/v/refid/nhkworld/prefid/'+vid_id+'?embed=js&targetId=videoplayer&de-responsive=true&de-callback-method=nwCustomCallback&de-appid='+vid_id+'&de-subtitle-on=false', headers=hdr)
-    response = urllib.request.urlopen(req)
-    link_=response.read()
-    response.close()
-    link = str(link_)
-    match = re.compile(r"\\'data-de-program-uuid\\',\\'(.+?)\\'").findall(link)
-    for p_uuid_ in match:
-        p_uuid = str(p_uuid_).replace("['" , "").replace("']" , "")
-        req = urllib.request.urlopen('https://movie-s.nhk.or.jp/ws/ws_program/api/67f5b750-b419-11e9-8a16-0e45e8988f42/apiv/5/mode/json?v='+p_uuid)
-        vod_json = json.load(req)
-        try:
-            v1 = vod_json['response']['WsProgramResponse']['program']['asset']['assetFiles'][0]['rtmp']['play_path']
-            vlink_1 = v1.split('?')
-            vlink1 = 'https://nhkw-mzvod.akamaized.net/www60/mz-nhk10/_definst_/' + vlink_1[0] + '/chunklist.m3u8'
-            media_item_list('720: '+ name, vlink1, plot, iconimage, iconimage, '')
-        except:
-            pass
-        try:
-            v2 = vod_json['response']['WsProgramResponse']['program']['asset']['referenceFile']['rtmp']['play_path']
-            vlink_2 = v2.split('?')
-            vlink2 = 'https://nhkw-mzvod.akamaized.net/www60/mz-nhk10/_definst_/' + vlink_2[0] + '/chunklist.m3u8'
-            media_item_list('1080: '+ name, vlink2, plot, iconimage, iconimage, '')
-        except:
-            pass
+    req = urllib.request.urlopen('https://api01-platform.stream.co.jp/apiservice/getMediaByParam/?token=NDc4NThCNTkxQzFCNkQ3ODA4NjcwNTZGREYzNURBNzM=&type=json&optional_id='+vid_id+'&active_flg=1')
+    vod_json = json.load(req)
+    try:
+        v1 = vod_json['meta'][0]['movie_url']['mb_hd']
+        media_item_list('720: '+ name, v1, plot, iconimage, iconimage, '')
+    except:
+        pass
         #xbmcplugin.setContent(pluginhandle, 'episodes')
 
 
 #programs
 def IDX_PROGS(url):
-    xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE_IGNORE_THE
     req = urllib.request.urlopen(url)
     progs_json = json.load(req)
     progs = progs_json['vod_programs']['programs']
@@ -547,41 +529,24 @@ def P_RESOLVE(name,url,mode,plot,iconimage):
         plot = translate(plot_, trans_dict)
         thumbnl = host2[:-1]+thumbnl_
         s_dict[i]=series; e_dict[i]=ep_name; v_dict[i]=vid_id; p_dict[i]=plot; t_dict[i]=thumbnl
-        req1_dict[i] = 'https://movie-s.nhk.or.jp/v/refid/nhkworld/prefid/'+v_dict[i]+'?embed=js&targetId=videoplayer&de-responsive=true&de-callback-method=nwCustomCallback&de-appid='+v_dict[i]+'&de-subtitle-on=false'
         if s_dict[i] == '':
-            addDir2(e_dict[i],req1_dict[i],'p_resolve2',p_dict[i],t_dict[i])
+            addDir2(e_dict[i],v_dict[i],'p_resolve2',p_dict[i],t_dict[i])
         elif e_dict[i] == '':
-            addDir2(s_dict[i],req1_dict[i],'p_resolve2',p_dict[i],t_dict[i])
+            addDir2(s_dict[i],v_dict[i],'p_resolve2',p_dict[i],t_dict[i])
         else:
-            addDir2(s_dict[i]+' - '+e_dict[i],req1_dict[i],'p_resolve2',p_dict[i],t_dict[i])
+            addDir2(s_dict[i]+' - '+e_dict[i],v_dict[i],'p_resolve2',p_dict[i],t_dict[i])
     #xbmcplugin.setContent(pluginhandle, 'episodes')
 
 
 def P_RESOLVE2(name,url,mode,plot,iconimage):
-    req = urllib.request.Request(url, headers=hdr)
-    response = urllib.request.urlopen(req)
-    link_=response.read()
-    response.close()
-    link = str(link_)
-    match = re.compile(r"\\'data-de-program-uuid\\',\\'(.+?)\\'").findall(link)
-    for p_uuid_ in match:
-        p_uuid = str(p_uuid_).replace("['" , "").replace("']" , "")
-        req = urllib.request.urlopen('https://movie-s.nhk.or.jp/ws/ws_program/api/67f5b750-b419-11e9-8a16-0e45e8988f42/apiv/5/mode/json?v='+p_uuid)
-        vod_json = json.load(req)
-        try:
-            v1 = vod_json['response']['WsProgramResponse']['program']['asset']['assetFiles'][0]['rtmp']['play_path']
-            vlink_1 = v1.split('?')
-            vlink1 = 'https://nhkw-mzvod.akamaized.net/www60/mz-nhk10/definst/' + vlink_1[0] + '/chunklist.m3u8'
-            media_item_list('720: '+ name, vlink1, plot, iconimage, iconimage, '')
-        except:
-            pass
-        try:
-            v2 = vod_json['response']['WsProgramResponse']['program']['asset']['referenceFile']['rtmp']['play_path']
-            vlink_2 = v2.split('?')
-            vlink2 = 'https://nhkw-mzvod.akamaized.net/www60/mz-nhk10/definst/' + vlink_2[0] + '/chunklist.m3u8'
-            media_item_list('1080: '+ name, vlink2, plot, iconimage, iconimage, '')
-        except:
-            pass
+    vid_id = str(url)
+    req = urllib.request.urlopen('https://api01-platform.stream.co.jp/apiservice/getMediaByParam/?token=NDc4NThCNTkxQzFCNkQ3ODA4NjcwNTZGREYzNURBNzM=&type=json&optional_id='+vid_id+'&active_flg=1')
+    vod_json = json.load(req)
+    try:
+        v1 = vod_json['meta'][0]['movie_url']['mb_hd']
+        media_item_list('720: '+ name, v1, plot, iconimage, iconimage, '')
+    except:
+        pass
     #xbmcplugin.setContent(pluginhandle, 'episodes')
 
 
