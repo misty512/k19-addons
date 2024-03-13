@@ -1,4 +1,4 @@
-# Best of NHK - by misty 2013-2023.
+# Best of NHK - by misty 2013-2024.
 # import python libraries
 import urllib.request, urllib.error, urllib.parse
 import re
@@ -223,7 +223,7 @@ def CATEGORIES():
     addDir('NHK World Live Stream', '', 'live_strm', nhk_icon)
     #addDir('NHK World Chinese Language Stream', '', 'other_live_strm', nhk_icon)
     addDir('NHK World On Demand', '', 'vod_cats', nhk_icon)
-    addDir('JIBTV On Demand', 'https://www.jibtv.com/programs/', 'jibtv', jib_icon)
+    #addDir('JIBTV On Demand', 'https://www.jibtv.com/programs/', 'jibtv', jib_icon)
     addDir('NHK World News', '', 'news', nhk_icon)
     addDir('NHK Radio News', '', 'audio', nhk_icon)
     addDir('NHK Videos on Youtube', '', 'youtube1', nhk_icon)
@@ -373,10 +373,10 @@ def IDX_LIVE_STRM():
     # menu
     if TimeZone == '(GMT+09:00) Osaka, Sapporo, Tokyo':
         media_item_list(name + ' - 720', 'https://nhkwlive-ojp.akamaized.net/hls/live/2003459/nhkwlive-ojp-en/index_2M.m3u8', desc, thumbnl, thumbnl, '')
-        media_item_list(name + ' - 1080', 'https://nhkwlive-ojp.akamaized.net/hls/live/2003459/nhkwlive-ojp-en/index_4M.m3u8', desc, thumbnl, thumbnl, '')
+        #media_item_list(name + ' - 1080', 'https://nhkwlive-ojp.akamaized.net/hls/live/2003459/nhkwlive-ojp-en/index_4M.m3u8', desc, thumbnl, thumbnl, '')
     else:
-        media_item_list(name + ' - 720', 'https://nhkwlive-xjp.akamaized.net/hls/live/2003458/nhkwlive-xjp-en/index_2M.m3u8', desc, thumbnl, thumbnl, '')
-        media_item_list(name + ' - 1080', 'https://nhkwlive-ojp.akamaized.net/hls/live/2003459/nhkwlive-ojp-en/index_4M.m3u8', desc, thumbnl, thumbnl, '')
+        media_item_list(name + ' - 720', 'https://nhkwlive-ojp.akamaized.net/hls/live/2003459/nhkwlive-ojp-en/index_2M.m3u8', desc, thumbnl, thumbnl, '')
+        #media_item_list(name + ' - 1080', 'https://nhkwlive-ojp.akamaized.net/hls/live/2003459/nhkwlive-ojp-en/index_4M.m3u8', desc, thumbnl, thumbnl, '')
     try:
         if sub_name == "":
             if use_color == "true":
