@@ -1,3 +1,10 @@
+Ver. 3.0.09
+
+Best of NHK
+
+Fix: NHK News VOD and Audio sections
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Ver. 3.0.08
 
 Best of NHK

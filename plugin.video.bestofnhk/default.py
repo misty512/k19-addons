@@ -1,4 +1,4 @@
-# Best of NHK - by misty 2013-2024.
+# Best of NHK - by misty 2013-2025.
 # import python libraries
 import urllib.request, urllib.error, urllib.parse
 import re
@@ -36,7 +36,7 @@ host9 = 'https://www3.nhk.or.jp/nhkworld/assets/images/vod/icon/png320/'
 host10 = 'https://nwapi.nhk.jp/nhkworld/pg/v6b/'
 host11 = 'https://www3.nhk.or.jp/nhkworld/upld/thumbnails/en/news/programs/'
 host12 = 'https://nwapi.nhk.jp/nhkworld/vodcliplist/v7b/'
-host13 = 'https://nwapi.nhk.jp/nhkworld/rdonews/v6b/'
+host13 = 'https://www3.nhk.or.jp/nhkworld/apibase/'
 host14 = 'https://nwapi.nhk.jp/nhkworld/vodplaylist/v8b/'
 host15 = 'https://nwapi.nhk.jp/nhkworld/vodtaglist/v7b/'
 apikey = 'apikey=EJfK8jdS57GqlupFgAfAAwr573q01y6k'
@@ -60,10 +60,10 @@ use_color = settings.getSetting('usecolor')
 month = { 1:'01_jan', 2:'02_feb', 3:'03_mar', 4:'04_apr', 5:'05_may', 6:'06_jun',
           7:'07_jul', 8:'08_aug', 9:'09_sep', 10:'10_oct', 11:'11_nov', 12:'12_dec' }
 lang = { 0:'Arabic', 1:'Bengali', 2:'Burmese', 3:'Chinese', 4:'English', 5:'French', 6:'Hindi',
-         7:'Indonesia', 8:'Japanese', 9:'Korean', 10:'Persian', 11:'Portuguese', 12:'Russian',
-         13:'Spanish', 14:'Swahili', 15:'Thai', 16:'Urdu', 17:'Vietnamese' }
-lang_key = { 0:'ar', 1:'bn', 2:'my', 3:'zh', 4:'en', 5:'fr', 6:'hi', 7:'id', 8:'ja',
-            9:'ko', 10:'fa', 11:'pt', 12:'ru', 13:'es', 14:'sw', 15:'th', 16:'ur', 17:'vi' }
+         7:'Indonesia', 8:'Korean', 9:'Persian', 10:'Portuguese', 11:'Russian',
+         12:'Spanish', 13:'Swahili', 14:'Thai', 15:'Urdu', 16:'Vietnamese' }
+lang_key = { 0:'ar', 1:'bn', 2:'my', 3:'zh', 4:'en', 5:'fr', 6:'hi', 7:'id', 8:'ko', 9:'fa', 10:'pt', 11:'ru', 12:'es', 13:'sw', 14:'th',
+             15:'ur', 16:'vi' }
 hdr = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
        'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
@@ -704,9 +704,9 @@ def RESOLVE(name,url,mode,plot,iconimage):
     dom = parseString(data)
     v_url = dom.getElementsByTagName('file.high')[0].toxml()
     if mode == 'tn_resolve':
-        vid_url = v_url.replace('<file.high><![CDATA[','').replace(']]></file.high>','').replace('rtmp://flv.nhk.or.jp/ondemand/flv','https://nhkworld-vh.akamaihd.net/i').replace('HQ.mp4',',L,H,Q.mp4.csmil/master.m3u8')
+        vid_url = v_url.replace('<file.high><![CDATA[','').replace(']]></file.high>','').replace('rtmp://flv.nhk.or.jp/ondemand/flv','https://vod-stream.nhk.jp').replace('.mp4','/index.m3u8')
     else:
-        vid_url = v_url.replace('<file.high>','').replace('</file.high>','').replace('rtmp://flv.nhk.or.jp/ondemand/flv','https://nhkworld-vh.akamaihd.net/i').replace('mp4','mp4/master.m3u8')
+        vid_url = v_url.replace('<file.high>','').replace('</file.high>','').replace('rtmp://flv.nhk.or.jp/ondemand/flv','https://vod-stream.nhk.jp').replace('.mp4','/index.m3u8')
     media_item_list(name,vid_url,plot,iconimage,iconimage, '')
     #xbmcplugin.setContent(pluginhandle, 'episodes')
 
@@ -714,7 +714,7 @@ def RESOLVE(name,url,mode,plot,iconimage):
 def IDX_RADIO(url):
     fanart = 'https://www3.nhk.or.jp/nhkworld/en/ondemand/'+img[z]
     for i in range(17):
-        media_item_list('NHK Radio News in '+lang[i], host13+lang_key[i]+'/news.json','','',fanart, '')
+        media_item_list('NHK Radio News in '+lang[i], host13+lang_key[i]+'/rnews.json','','',fanart, '')
 
 
 # Youtube
@@ -813,8 +813,8 @@ def media_item_list(name,url,plot,img,fanart,subtitle):
         req = urllib.request.Request(url, headers=hdr)
         file = urllib.request.urlopen(req)
         radio_json = json.load(file)
-        a_link = radio_json['data']['audio']
-        radionews_url = 'https://nhkworld-vh.akamaihd.net/i'+a_link+'/master.m3u8'
+        a_link = radio_json['data']['podcast']
+        radionews_url = 'https://www3.nhk.or.jp'+a_link
         addon.add_music_item({'url': radionews_url}, {'title': name}, context_replace = nhk_icon, fanart = fanart, playlist=False)
 
     elif mode=='news':
