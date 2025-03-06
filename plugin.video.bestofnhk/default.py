@@ -373,10 +373,10 @@ def IDX_LIVE_STRM():
     show_time = str(datetime.datetime.fromtimestamp(pubDate/1000).strftime('%H:%M'))
     # menu
     if TimeZone == '(GMT+09:00) Osaka, Sapporo, Tokyo':
-        media_item_list(name + ' - 720', 'https://nhkwlive-ojp.akamaized.net/hls/live/2003459/nhkwlive-ojp-en/index_2M.m3u8', desc, thumbnl, thumbnl, '')
+        media_item_list(name + ' - 720', 'https://nhkworld-tv.akamaized.net/hls/live/2115640/nhkworld-tv/index_2M.m3u8', desc, thumbnl, thumbnl, '')
         #media_item_list(name + ' - 1080', 'https://nhkwlive-ojp.akamaized.net/hls/live/2003459/nhkwlive-ojp-en/index_4M.m3u8', desc, thumbnl, thumbnl, '')
     else:
-        media_item_list(name + ' - 720', 'https://nhkwlive-ojp.akamaized.net/hls/live/2003459/nhkwlive-ojp-en/index_2M.m3u8', desc, thumbnl, thumbnl, '')
+        media_item_list(name + ' - 720', 'https://nhkworld-tv.akamaized.net/hls/live/2115640/nhkworld-tv/index_2M.m3u8', desc, thumbnl, thumbnl, '')
         #media_item_list(name + ' - 1080', 'https://nhkwlive-ojp.akamaized.net/hls/live/2003459/nhkwlive-ojp-en/index_4M.m3u8', desc, thumbnl, thumbnl, '')
     try:
         if sub_name == "":
