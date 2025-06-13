@@ -64,7 +64,7 @@ lang = { 0:'Arabic', 1:'Bengali', 2:'Burmese', 3:'Chinese', 4:'English', 5:'Fren
          12:'Spanish', 13:'Swahili', 14:'Thai', 15:'Urdu', 16:'Vietnamese' }
 lang_key = { 0:'ar', 1:'bn', 2:'my', 3:'zh', 4:'en', 5:'fr', 6:'hi', 7:'id', 8:'ko', 9:'fa', 10:'pt', 11:'ru', 12:'es', 13:'sw', 14:'th',
              15:'ur', 16:'vi' }
-hdr = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
+hdr = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
        'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
        'Accept-Encoding': 'none',
@@ -362,8 +362,9 @@ class TextBox:
 
 # live streams
 def IDX_LIVE_STRM():
-    req_now = urllib.request.urlopen(now)
-    pl_now = json.load(req_now)
+    req = urllib.request.Request(now, headers=hdr)
+    response = urllib.request.urlopen(req)
+    pl_now = json.load(response)
     pubDate = int(pl_now['channel']['item'][0]['pubDate'])
     name = pl_now['channel']['item'][0]['title']
     desc = pl_now['channel']['item'][0]['description']
@@ -449,8 +450,9 @@ def IDX_VOD_CATS(url):
 
 # video on demand
 def IDX_VOD(url,mode):
-    req = urllib.request.urlopen(url)
-    vod_json = json.load(req)
+    req = urllib.request.Request(url, headers=hdr)
+    response = urllib.request.urlopen(req)
+    vod_json = json.load(response)
     episodes = vod_json['data']['episodes']
     for i, episode in enumerate(episodes):
         series_ = vod_json['data']['episodes'][i]['title']
@@ -485,8 +487,9 @@ def VOD_RESOLVE(name,url,plot,iconimage):
 
 #programs
 def IDX_PROGS(url):
-    req = urllib.request.urlopen(url)
-    progs_json = json.load(req)
+    req = urllib.request.Request(url, headers=hdr)
+    response = urllib.request.urlopen(req)
+    progs_json = json.load(response)
     progs = progs_json['vod_programs']['programs']
     for key, value in dict.items(progs):
         ttl_ep = progs_json['vod_programs']['programs'][key]['total_episode']
@@ -502,8 +505,9 @@ def IDX_PROGS(url):
 
 #playlists
 def IDX_P_LISTS(url):
-    req = urllib.request.urlopen(url)
-    plists_json = json.load(req)
+    req = urllib.request.Request(url, headers=hdr)
+    response = urllib.request.urlopen(req)
+    plists_json = json.load(response)
     plists = plists_json['data']['taglist']
     for i, plist in enumerate(plists):
         vod_cnt = plists_json['data']['taglist'][i]['vod_count']
@@ -523,8 +527,9 @@ def IDX_P_LISTS(url):
 
 
 def P_RESOLVE(name,url,mode,plot,iconimage):
-    req = urllib.request.urlopen(url)
-    vod_json = json.load(req)
+    req = urllib.request.Request(url, headers=hdr)
+    response = urllib.request.urlopen(req)
+    vod_json = json.load(response)
     vlists = vod_json['data']['playlist'][0]['track']
     for i,  vlist in enumerate(vlists):
         series_ = vod_json['data']['playlist'][0]['track'][i]['title_clean']
