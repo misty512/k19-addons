@@ -1,3 +1,11 @@
+Ver. 3.0.12
+
+Best of NHK
+
+Fix: Live stream - Inputstream Adaptive is now required to view the live stream
+Add: NHK News 7 to News section
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Ver. 3.0.11
 
 Best of NHK

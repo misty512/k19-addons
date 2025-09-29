@@ -374,10 +374,10 @@ def IDX_LIVE_STRM():
     show_time = str(datetime.datetime.fromtimestamp(pubDate/1000).strftime('%H:%M'))
     # menu
     if TimeZone == '(GMT+09:00) Osaka, Sapporo, Tokyo':
-        media_item_list(name + ' - 720', 'https://nhkworld-tv.akamaized.net/hls/live/2115640/nhkworld-tv/index_2M.m3u8', desc, thumbnl, thumbnl, '')
+        media_item_list(name + ' - 720', 'https://media-tyo.hls.nhkworld.jp/hls/w/live/master.m3u8', desc, thumbnl, thumbnl, '')
         #media_item_list(name + ' - 1080', 'https://nhkwlive-ojp.akamaized.net/hls/live/2003459/nhkwlive-ojp-en/index_4M.m3u8', desc, thumbnl, thumbnl, '')
     else:
-        media_item_list(name + ' - 720', 'https://nhkworld-tv.akamaized.net/hls/live/2115640/nhkworld-tv/index_2M.m3u8', desc, thumbnl, thumbnl, '')
+        media_item_list(name + ' - 720', 'https://media-tyo.hls.nhkworld.jp/hls/w/live/master.m3u8', desc, thumbnl, thumbnl, '')
         #media_item_list(name + ' - 1080', 'https://nhkwlive-ojp.akamaized.net/hls/live/2003459/nhkwlive-ojp-en/index_4M.m3u8', desc, thumbnl, thumbnl, '')
     try:
         if sub_name == "":
@@ -647,6 +647,10 @@ def IDX_NEWS(url):
         pass
     try:
         media_item_list('Newsline Asia 24', host2+'nhkworld/data/en/news/programs/1003.xml','',host11+'1003.jpg',host11+'1003.jpg', '')
+    except:
+        pass
+    try:
+        media_item_list('NHK News 7', host2+'nhkworld/data/en/news/programs/1008.xml','',host11+'1008.jpg',host11+'1008.jpg', '')
     except:
         pass
     try:
